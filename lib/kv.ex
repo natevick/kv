@@ -1,18 +1,5 @@
 defmodule Kv do
-  @moduledoc """
-  Documentation for Kv.
-  """
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Kv.hello
-      :world
-
-  """
-  def hello do
-    :world
-  end
+  defdelegate new(),                      to: Kv.Impl
+  defdelegate lookup(names, name),        to: Kv.Impl
+  defdelegate store(names, name, value),  to: Kv.Impl
 end
