@@ -1,5 +1,16 @@
 defmodule Kv do
-  defdelegate new(),                      to: Kv.Impl
-  defdelegate lookup(names, name),        to: Kv.Impl
-  defdelegate store(names, name, value),  to: Kv.Impl
+  def new() do
+    { :ok, names } = GenServer.start_link(Kv.Server, %{})
+    names
+  end
+  
+  def lookup(names, name) do
+    GenServer.call(names, {:lookup, name})
+  end
+  
+  def store(names, name, value) do
+    GenServer.cast(names, { :store, name, value })
+    names
+  end
 end
+
